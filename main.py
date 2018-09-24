@@ -10,7 +10,7 @@ form = """
 
         <style>
 
-            form {
+            form {{
 
                 background-color: #eee;
 
@@ -24,9 +24,9 @@ form = """
 
                 border-radius: 10px;
 
-            }
+            }}
 
-            textarea {
+            textarea {{
 
                 margin: 10px 0;
 
@@ -34,7 +34,7 @@ form = """
 
                 height: 120px;
 
-            }
+            }}
 
         </style>
 
@@ -45,7 +45,7 @@ form = """
       <form method='POST'>
         <label for="rot">Rotate by:</label>
         <input name="rot" type="text" value="0"/>
-        <textarea name="text"></textarea>
+        <textarea name="text">{0}</textarea>
         <input type="submit"/>
       </form>
 
@@ -57,7 +57,7 @@ form = """
 #initial site
 @app.route("/")
 def index():
-    return form
+    return form.format('')
 
 #Use request to grab user info from form and then pass to caesar.py
 @app.route("/", methods=['POST'])
@@ -65,6 +65,6 @@ def web_encrypt():
     rotation = request.form['rot']
     user_text = request.form['text']
     encrypted_str = encrypt(user_text, int(rotation))
-    return '<h1>Your encrypted string is: {0}'.format(encrypted_str)
+    return form.format(encrypted_str)
 
 app.run()
